@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+}
+
+group = 'me.adam.client'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.marcloud.net/" }
+    maven { url "https://libraries.minecraft.net/" }
+    maven { url "https://nifty-gui.sourceforge.net/nifty-maven-repo/" }
+}
+
+dependencies {
+    implementation "oshi-project:oshi-core:1.1"
+    implementation "net.java.dev.jna:jna:3.4.0"
+    implementation "net.java.dev.jna:platform:3.4.0"
+    implementation "com.ibm.icu:icu4j:62.1"
+    implementation "net.sf.jopt-simple:jopt-simple:4.9"
+    implementation "com.paulscode:codecjorbis:20101023"
+    implementation "com.paulscode:codecwav:20101023"
+    implementation "com.paulscode:libraryjavasound:20101123"
+    implementation "com.paulscode:librarylwjglopenal:20100824"
+    implementation "com.paulscode:soundsystem:20120107"
+    implementation "io.netty:netty-all:4.0.23.Final"
+    implementation "com.google.guava:guava:17.0"
+    implementation "org.apache.commons:commons-lang3:3.8.1"
+    implementation "commons-io:commons-io:2.6"
+    implementation "commons-codec:commons-codec:1.11"
+    implementation "net.java.jinput:jinput:2.0.9"
+    implementation "net.java.jutils:jutils:1.0.0"
+    implementation "com.google.code.gson:gson:2.8.5"
+    implementation "org.apache.commons:commons-compress:1.18"
+    implementation "org.apache.httpcomponents:httpclient:4.5.6"
+    implementation "commons-logging:commons-logging:1.2"
+    implementation "org.apache.httpcomponents:httpcore:4.4.10"
+    implementation "org.apache.logging.log4j:log4j-core:2.0-beta9"
+    implementation "org.apache.logging.log4j:log4j-api:2.0-beta9"
+    implementation "org.lwjgl.lwjgl:lwjgl:2.9.3"
+    implementation "org.lwjgl.lwjgl:lwjgl_util:2.9.3"
+    implementation "com.mojang:realms:1.7.59"
+    implementation "com.mojang:authlib:1.5.21"
+    implementation "tv.twitch:twitch:6.5"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+tasks.register('runClient', JavaExec) {
+    group = "minecraft"
+    description = "Runs the Minecraft client (Windows only, Java 8)."
+
+    mainClass = "Start"
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs "-Djava.library.path=../natives/windows"
+    workingDir = project.projectDir.toPath().resolve("run").toFile()
+}
